@@ -1,18 +1,22 @@
-package se331.lab.rest.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+        package se331.lab.rest.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 
 @Data
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Event {
- @jakarta.persistence.Id
  @Id
  @GeneratedValue(strategy = GenerationType.IDENTITY)
  @EqualsAndHashCode.Exclude
@@ -24,5 +28,13 @@ public class Event {
  String date;
  String time;
  Boolean petAllowed;
- String organizer;
-}
+ @ManyToOne
+ @JoinColumn(name="organizer_id")
+ Organizer organizer;
+ @ManyToMany(mappedBy = "eventHistory")
+ @Builder.Default
+ @JsonIgnore
+ List<Participant> participants = new ArrayList<>();
+
+ }
+

@@ -1,11 +1,9 @@
 package se331.lab.rest.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +12,17 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Organizer {
+public class Participant {
  @Id
  @GeneratedValue(strategy = GenerationType.IDENTITY)
  @EqualsAndHashCode.Exclude
-
  Long id;
  String name;
- @OneToMany(mappedBy = "organizer")
+ String telNo;
+ @ManyToMany
+ @JsonBackReference
  @Builder.Default
- List<Event> ownEvents = new ArrayList<>();
+ List<Event> eventHistory = new ArrayList<>();
+
 
 }
